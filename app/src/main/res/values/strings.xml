@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Pledge</string>
+    <string name="search_for_devices">Search For Devices</string>
+    <string name="make_me_discoverable">Make me discoverable</string>
 </resources>
