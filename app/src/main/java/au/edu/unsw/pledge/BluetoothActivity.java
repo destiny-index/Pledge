@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.Set;
@@ -31,7 +32,7 @@ public class BluetoothActivity extends AppCompatActivity {
         switch(requestCode) {
             case REQUEST_ENABLE_BT:
                 if (resultCode == RESULT_OK){
-                    scanBluetooth();
+                    queryPairedDevices();
                 } else {
                     TextView textView = (TextView) findViewById(R.id.blueToothText);
                     textView.setText("Must enable bluetooth");
@@ -56,23 +57,30 @@ public class BluetoothActivity extends AppCompatActivity {
             Intent enableBluetoothIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableBluetoothIntent, REQUEST_ENABLE_BT);
         } else {
-            scanBluetooth();
+            queryPairedDevices();
         }
     }
 
-    private void scanBluetooth() {
+    private void queryPairedDevices() {
         TextView textView = (TextView) findViewById(R.id.blueToothText);
         textView.setText("Scanning for bluetooth devices");
 
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
         // Querying paired devices
         Set<BluetoothDevice> pairedDevices = BluetoothAdapter.getDefaultAdapter().getBondedDevices();
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
+
+        ListView listView = (ListView) findViewById(R.id.listView);
+        listView.setAdapter(arrayAdapter);
+
         if (pairedDevices.size() > 0) {
             // Loop through paired devices
             for (BluetoothDevice device: pairedDevices) {
                 // Add the name and address to an array adapter to show in a ListView
-                arrayAdapter.add(device.getName() + "%n" + device.getAddress());
+                arrayAdapter.add(device.getName() + "\n" + device.getAddress());
             }
+            textView.setText("Found paired device(s)");
+        } else {
+            textView.setText("No paired device\nDiscover device?");
         }
 
     }

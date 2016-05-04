@@ -63,5 +63,10 @@ public class MainActivity extends AppCompatActivity {
     private void startServer() {
         TextView textView = (TextView) findViewById(R.id.textView);
         textView.setText("Starting BluetoothServer");
+
+
+        // Start Accept Thread
+        AcceptThread t = new AcceptThread();
+        t.start();
     }
 }
