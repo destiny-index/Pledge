@@ -151,14 +151,13 @@ public class BluetoothActivity extends AppCompatActivity {
             try (
                 PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
-//                OutputStream out = socket.getOutputStream();
-
             ) {
                 showToast("Writing Hello");
-//                out.write("Hello From Adrian".getBytes());
-                out.println("Helllo this is something else");
+                out.println("GET PAYPAL");
                 showToast("Done Hello");
+
+                String inputLine = in.readLine();
+                showToast(inputLine);
 
             } catch (IOException e) {
                 e.printStackTrace();

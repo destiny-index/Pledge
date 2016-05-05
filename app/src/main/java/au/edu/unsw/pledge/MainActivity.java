@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "BluetoothActivity";
     private static final int REQUEST_ENABLE_DISCOVERABLE = 1;
 
+    private String myPaypalId = "DummyPaypalID";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -122,13 +124,13 @@ public class MainActivity extends AppCompatActivity {
                     new ServerThread(socket).start();
 
                     // Just do 1 connection for now
-                    try {
-                        serverSocket.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    showToast("Accepted Connection");
-                    break;
+//                    try {
+//                        serverSocket.close();
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                    showToast("Accepted Connection");
+//                    break;
                 }
             }
         }
@@ -157,20 +159,20 @@ public class MainActivity extends AppCompatActivity {
             super.run();
 
             try (
-//                PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-//                BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
-            InputStream in = socket.getInputStream();
+                PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+                BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
             ) {
                 String inputLine, outputLine;
-                byte[] buffer = new byte[1024];
-                int bytes;
                 showToast("Reading input");
-                bytes = in.read(buffer);
+                inputLine = in.readLine();
                 showToast("Write to Toast");
-                showToast(buffer.toString());
+                showToast(inputLine);
 
+                if (inputLine.equals("GET PAYPAL")) {
+                    showToast("Sending Paypal ID");
+                    out.println(myPaypalId);
+                }
 
             } catch (IOException e) {
                 e.printStackTrace();
