@@ -1,4 +1,4 @@
-package au.edu.unsw.pledge;
+package com.elec9782.youhancheery.logintest1;
 
 import org.junit.Test;
 

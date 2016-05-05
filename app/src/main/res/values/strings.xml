@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">Pledge</string>
+    <string name="app_name">Login Test 1</string>
+    <string name="title_activity_sign_up">signUp</string>
 </resources>
+
