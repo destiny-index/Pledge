@@ -1,4 +1,4 @@
-package au.edu.unsw.pledge;
+package com.unsw.davidvang.myapplication;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
