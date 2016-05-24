@@ -1,7 +1,10 @@
-package com.unsw.davidvang.myapplication;
+package au.edu.unsw.pledge.loginsystem;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -10,12 +13,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import au.edu.unsw.pledge.R;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class SignupActivity extends AppCompatActivity {
     private static final String TAG = "SignupActivity";
-
+    private Firebase ref;
     @Bind(R.id.input_name)
     EditText _nameText;
     @Bind(R.id.input_email)
@@ -32,6 +39,8 @@ public class SignupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
         ButterKnife.bind(this);
+
+        ref = new Firebase(Constants.FIREBASE_URL);
 
         _signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,7 +79,49 @@ public class SignupActivity extends AppCompatActivity {
         String password = _passwordText.getText().toString();
 
         // TODO: Implement your own signup logic here.
+        name = name.trim();
+        password = password.trim();
+        email = email.trim();
 
+        if (password.isEmpty() || email.isEmpty() || name.isEmpty()) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(SignupActivity.this);
+            builder.setMessage(R.string.signup_error_message)
+                    .setTitle(R.string.signup_error_title)
+                    .setPositiveButton(android.R.string.ok, null);
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        } else {
+
+            // sign up
+            ref.createUser(email, password, new Firebase.ResultHandler() {
+                @Override
+                public void onSuccess() {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(SignupActivity.this);
+                    builder.setMessage(R.string.signup_success)
+                            .setPositiveButton(R.string.login_button_label, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    startActivity(intent);
+                                }
+                            });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
+
+                @Override
+                public void onError(FirebaseError firebaseError) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(SignupActivity.this);
+                    builder.setMessage(firebaseError.getMessage())
+                            .setTitle(R.string.signup_error_title)
+                            .setPositiveButton(android.R.string.ok, null);
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
+            });
+        }
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
@@ -102,14 +153,14 @@ public class SignupActivity extends AppCompatActivity {
         String name = _nameText.getText().toString();
         String email = _emailText.getText().toString();
         String password = _passwordText.getText().toString();
-
+        /*
         if (name.isEmpty() || name.length() < 3) {
             _nameText.setError("at least 3 characters");
             valid = false;
         } else {
             _nameText.setError(null);
         }
-
+        */
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             _emailText.setError("enter a valid email address");
             valid = false;

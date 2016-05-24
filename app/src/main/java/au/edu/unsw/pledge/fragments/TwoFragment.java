@@ -1,4 +1,4 @@
-package com.unsw.davidvang.myapplication.fragments;
+package au.edu.unsw.pledge.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -6,12 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.unsw.davidvang.myapplication.R;
+import au.edu.unsw.pledge.R;
 
 
-public class ThreeFragment extends Fragment{
+public class TwoFragment extends Fragment{
 
-    public ThreeFragment() {
+    public TwoFragment() {
         // Required empty public constructor
     }
 
@@ -24,7 +24,7 @@ public class ThreeFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_three, container, false);
+        return inflater.inflate(R.layout.fragment_two, container, false);
     }
 
 }

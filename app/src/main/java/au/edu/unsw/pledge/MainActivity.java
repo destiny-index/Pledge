@@ -1,34 +1,31 @@
-package com.unsw.davidvang.myapplication;
+package au.edu.unsw.pledge;
 
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.unsw.davidvang.myapplication.fragments.OneFragment;
-import com.unsw.davidvang.myapplication.fragments.TwoFragment;
-import com.unsw.davidvang.myapplication.fragments.ThreeFragment;
+import com.firebase.client.Firebase;
+import au.edu.unsw.pledge.fragments.OneFragment;
+import au.edu.unsw.pledge.fragments.TwoFragment;
+import au.edu.unsw.pledge.fragments.ThreeFragment;
+import au.edu.unsw.pledge.loginsystem.Constants;
+import au.edu.unsw.pledge.loginsystem.LoginActivity;
+
 
 public class MainActivity extends AppCompatActivity {
 
+    private Firebase mRef;
     private int[] tabIcons = {
             R.drawable.icwifi,
             R.drawable.icpay,
@@ -51,6 +48,12 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(mViewPager);
         setupTabIcons();
 
+        //firebase SDK
+        Firebase.setAndroidContext(this);
+        mRef = new Firebase(Constants.FIREBASE_URL);
+        if (mRef.getAuth() == null) { //no user exists
+            loadLoginView();
+        }
         //set intent for login page
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
@@ -117,5 +120,12 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void loadLoginView() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        //prevents the user going to login screen if they press back on main_activity
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
 
 }

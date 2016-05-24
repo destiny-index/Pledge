@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.unsw.davidvang.myapplication">
+    package="au.edu.unsw.pledge">
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -8,8 +10,12 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+
         <activity
-            android:name=".MainActivity"
+            android:name="au.edu.unsw.pledge.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -18,8 +24,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.unsw.davidvang.myapplication.LoginActivity" android:theme="@style/AppTheme.Dark" />
-        <activity android:name="com.unsw.davidvang.myapplication.SignupActivity" android:theme="@style/AppTheme.Dark" />
+        <activity android:name="au.edu.unsw.pledge.loginsystem.LoginActivity" android:theme="@style/AppTheme.Dark" />
+        <activity android:name="au.edu.unsw.pledge.loginsystem.SignupActivity" android:theme="@style/AppTheme.Dark" />
     </application>
 
 </manifest>

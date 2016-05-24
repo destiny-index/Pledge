@@ -1,4 +1,4 @@
-package com.unsw.davidvang.myapplication.fragments;
+package au.edu.unsw.pledge.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.unsw.davidvang.myapplication.R;
+import au.edu.unsw.pledge.R;
 
 
 public class OneFragment extends Fragment{

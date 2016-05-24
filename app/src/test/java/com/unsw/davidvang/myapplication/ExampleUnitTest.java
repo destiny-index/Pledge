@@ -1,4 +1,4 @@
-package com.unsw.davidvang.myapplication;
+package com.unsw.davidvang.pledge;
 
 import org.junit.Test;
 
