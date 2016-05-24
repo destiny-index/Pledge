@@ -8,9 +8,10 @@ import android.view.ViewGroup;
 
 import au.edu.unsw.pledge.R;
 
-public class ThreeFragment extends Fragment{
 
-    public ThreeFragment() {
+public class FragmentHome extends Fragment{
+
+    public FragmentHome() {
         // Required empty public constructor
     }
 
@@ -23,7 +24,7 @@ public class ThreeFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_three, container, false);
+        return inflater.inflate(R.layout.fragment_one, container, false);
     }
 
 }

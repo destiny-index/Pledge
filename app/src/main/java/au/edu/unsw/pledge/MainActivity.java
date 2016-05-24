@@ -16,9 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.firebase.client.Firebase;
-import au.edu.unsw.pledge.fragments.OneFragment;
-import au.edu.unsw.pledge.fragments.TwoFragment;
-import au.edu.unsw.pledge.fragments.ThreeFragment;
+import au.edu.unsw.pledge.fragments.FragmentHome;
+import au.edu.unsw.pledge.fragments.FragmentPayment;
+import au.edu.unsw.pledge.fragments.FragmentSettings;
 import au.edu.unsw.pledge.loginsystem.Constants;
 import au.edu.unsw.pledge.loginsystem.LoginActivity;
 
@@ -63,9 +63,9 @@ public class MainActivity extends AppCompatActivity {
     }
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFrag(new OneFragment(), "Nearby");
-        adapter.addFrag(new TwoFragment(), "Payment");
-        adapter.addFrag(new ThreeFragment(), "Settings");
+        adapter.addFrag(new FragmentHome(), "Nearby");
+        adapter.addFrag(new FragmentPayment(), "Payment");
+        adapter.addFrag(new FragmentSettings(), "Settings");
         viewPager.setAdapter(adapter);
     }
     class ViewPagerAdapter extends FragmentPagerAdapter {
