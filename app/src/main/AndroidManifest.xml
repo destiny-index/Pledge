@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="au.edu.unsw.pledge">
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -14,7 +16,7 @@
             android:value="@string/facebook_app_id" />
 
         <activity
-            android:name="au.edu.unsw.pledge.MainActivity"
+            android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -23,14 +25,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name="au.edu.unsw.pledge.loginsystem.LoginActivity" android:theme="@style/AppTheme.Dark" />
-        <activity android:name="au.edu.unsw.pledge.loginsystem.SignupActivity" android:theme="@style/AppTheme.Dark" />
+        <activity
+            android:name=".loginsystem.LoginActivity"
+            android:theme="@style/AppTheme.Dark" />
+        <activity
+            android:name=".loginsystem.SignupActivity"
+            android:theme="@style/AppTheme.Dark" />
         <activity android:name=".preapproval.InterfaceActivity" />
-        <activity android:name="com.paypal.android.MEP.PayPalActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:configChanges="keyboardHidden|orientation" />
+        <activity
+            android:name="com.paypal.android.MEP.PayPalActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
         <service android:name=".preapproval.RequestService" />
+
+        <activity android:name=".ClientActivity" />
+        <activity android:name=".HostActivity"></activity>
     </application>
 
 </manifest>
