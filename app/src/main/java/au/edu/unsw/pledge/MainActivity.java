@@ -23,8 +23,9 @@ import au.edu.unsw.pledge.loginsystem.Constants;
 import au.edu.unsw.pledge.loginsystem.LoginActivity;
 
 
-public class MainActivity extends AppCompatActivity {
+import au.edu.unsw.pledge.preapproval.InterfaceActivity;
 
+public class MainActivity extends AppCompatActivity {
     private Firebase mRef;
     private int[] tabIcons = {
             R.drawable.icwifi,
@@ -34,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     //private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.getTabAt(2).setIcon(tabIcons[2]);
     }
     private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        ViewPagerAdapter adapter = new ViewPaagerAdapter(getSupportFragmentManager());
         adapter.addFrag(new OneFragment(), "Nearby");
         adapter.addFrag(new TwoFragment(), "Payment");
         adapter.addFrag(new ThreeFragment(), "Settings");
