@@ -22,9 +22,6 @@ import au.edu.unsw.pledge.fragments.ThreeFragment;
 import au.edu.unsw.pledge.loginsystem.Constants;
 import au.edu.unsw.pledge.loginsystem.LoginActivity;
 
-
-import au.edu.unsw.pledge.preapproval.InterfaceActivity;
-
 public class MainActivity extends AppCompatActivity {
     private Firebase mRef;
     private int[] tabIcons = {
@@ -35,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     //private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,9 +52,9 @@ public class MainActivity extends AppCompatActivity {
         if (mRef.getAuth() == null) { //no user exists
             loadLoginView();
         }
-        //set intent for login page
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
+//        //set intent for login page
+//        Intent intent = new Intent(this, LoginActivity.class);
+//        startActivity(intent);
     }
     private void setupTabIcons() {
         tabLayout.getTabAt(0).setIcon(tabIcons[0]);
