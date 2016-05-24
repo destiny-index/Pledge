@@ -100,7 +100,12 @@ public class InterfaceActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Start a service to get paid
+                // TODO: loop over preapproval keys and get payment
                 if (ppObj != null && ppObj.getPreapprovalKey() != null) {
+                    /* For now, we get the preappoval key from ppObj.getPreapprovalKey,
+                     * but we can just use any preapproval key we want. Just put it in the intent
+                     * and use it to start a RequestService
+                     */
                     Intent intent = new Intent(v.getContext(), RequestService.class);
                     intent.putExtra(RequestService.ACTION, RequestService.GET_PREAPPROVED_PAYMENT);
                     intent.putExtra(RequestService.PREAPPROVAL_KEY, ppObj.getPreapprovalKey());
