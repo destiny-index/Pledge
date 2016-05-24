@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.getTabAt(2).setIcon(tabIcons[2]);
     }
     private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPaagerAdapter(getSupportFragmentManager());
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFrag(new OneFragment(), "Nearby");
         adapter.addFrag(new TwoFragment(), "Payment");
         adapter.addFrag(new ThreeFragment(), "Settings");
