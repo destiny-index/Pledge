@@ -21,8 +21,6 @@ import java.util.InvalidPropertiesFormatException;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import au.edu.unsw.pledge.Settings;
-
 class RequestThread implements Runnable {
     public interface RequestListener {
         void preapprovalKeyObtained(String key);
