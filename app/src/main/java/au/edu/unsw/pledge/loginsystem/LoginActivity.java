@@ -30,6 +30,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
     private Firebase ref;
+    private int signin_f = 0;
     @Bind(R.id.input_email)
     EditText _emailText;
     @Bind(R.id.input_password)
@@ -38,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
     Button _loginButton;
     @Bind(R.id.link_signup)
     TextView _signupLink;
-    
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,10 +113,11 @@ public class LoginActivity extends AppCompatActivity {
                     map.put("email", emailAddress);
                     ref.child("users").child(authData.getUid()).setValue(map);
 
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
+//                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                    startActivity(intent);
+                    signin_f = 1;
                 }
 
                 @Override
@@ -127,6 +129,7 @@ public class LoginActivity extends AppCompatActivity {
                             .setPositiveButton(android.R.string.ok, null);
                     AlertDialog dialog = builder.create();
                     dialog.show();
+                    signin_f = 0;
                 }
             });
         }
@@ -135,8 +138,12 @@ public class LoginActivity extends AppCompatActivity {
                 new Runnable() {
                     public void run() {
                         // On complete call either onLoginSuccess or onLoginFailed
-                        onLoginSuccess();
-                        // onLoginFailed();
+                        //onLoginSuccess();
+                        if(signin_f == 1){
+                            onLoginSuccess();
+                        } else {
+                            onLoginFailed();
+                        }
                         progressDialog.dismiss();
                     }
                 }, 3000);
