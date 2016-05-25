@@ -122,6 +122,7 @@ public class HostActivity extends AppCompatActivity {
                     String inputLine, outputLine;
 
                     inputLine = in.readLine();
+                    Log.v(TAG, "Got from client: "+inputLine);
                     showToast(inputLine);
                 } catch (IOException e) {
                     e.printStackTrace();

@@ -54,7 +54,7 @@ public class ClientActivity extends InterfaceActivity {
                 Log.wtf(TAG, "This is not suppposed to happen");
             }
             String preApprovalKey = ppObj.getPreapprovalKey();
-            Toast.makeText(this, ""+preApprovalKey, Toast.LENGTH_LONG);
+            Toast.makeText(this, ""+preApprovalKey, Toast.LENGTH_LONG).show();
             // Pass BluetoothSocket and preApprovalKey to thread
             BluetoothDevice device = bluetoothAdapter.getRemoteDevice(MAC);
 
