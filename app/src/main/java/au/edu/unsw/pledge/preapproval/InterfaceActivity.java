@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -24,11 +25,16 @@ public class InterfaceActivity extends AppCompatActivity {
     /* This broadcast receiver will detect when the unconfirmed preapproval key is generated and
      * use the mobile payments library (MPL) to let the user confirm (or decline). */
     private BroadcastReceiver paypalRequestListener = new BroadcastReceiver() {
+
         @Override
         public void onReceive(Context context, Intent intent) {
+
+            Log.v("Adrian", "onReceive");
+
             if (intent.getAction() == RequestService.PREAPPROVAL_KEY_OBTAINED) {
                 // Update the display with the preapproval key
                 String preapprovalKey = intent.getStringExtra(RequestService.PREAPPROVAL_KEY);
+                Log.v("Adrian", "preapprovalKey" +preapprovalKey);
                 // Initialise the paypal mobile payments library (MPL)
                 ppObj = PayPal.initWithAppID(context, "APP-80W284485P519543T", PayPal.ENV_SANDBOX);
                 if (ppObj != null) {
