@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+
+import au.edu.unsw.pledge.Constants;
 import au.edu.unsw.pledge.R;
 
 import butterknife.Bind;

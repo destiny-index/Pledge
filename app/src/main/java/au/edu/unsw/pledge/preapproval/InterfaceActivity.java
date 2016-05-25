@@ -45,8 +45,7 @@ public class InterfaceActivity extends AppCompatActivity {
                     startActivityForResult(preapprovalIntent, PREAPPROVAL_REQUEST);
                 }
             } else if (intent.getAction() == RequestService.PAYMENT_COMPLETE) {
-                ((TextView) findViewById(R.id.paypal_receiver))
-                        .append("\n Payment Complete");
+                ((TextView) findViewById(R.id.paypal_receiver)).append("\n Payment Complete");
             }
         }
     };

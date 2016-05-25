@@ -19,7 +19,6 @@ import com.firebase.client.Firebase;
 import au.edu.unsw.pledge.fragments.FragmentHome;
 import au.edu.unsw.pledge.fragments.FragmentPayment;
 import au.edu.unsw.pledge.fragments.FragmentSettings;
-import au.edu.unsw.pledge.loginsystem.Constants;
 import au.edu.unsw.pledge.loginsystem.LoginActivity;
 
 public class MainActivity extends AppCompatActivity {
