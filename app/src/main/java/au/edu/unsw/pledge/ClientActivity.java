@@ -38,5 +38,20 @@ public class ClientActivity extends InterfaceActivity {
             }
             socket = tmp;
         }
+
+        @Override
+        public void run() {
+            super.run();
+            bluetoothAdapter.cancelDiscovery();
+        }
+
+        // Will cancel an in-progress connection, and close the socket
+        public void closeSocket() {
+            try {
+                socket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
