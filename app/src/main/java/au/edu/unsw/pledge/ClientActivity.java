@@ -20,6 +20,8 @@ import au.edu.unsw.pledge.preapproval.RequestService;
 
 public class ClientActivity extends InterfaceActivity {
 
+    public final static String EXTRA_MAC = "au.edu.unsw.pledge.MAC";
+
     private final static String TAG = "ClientActivity";
     private final BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
@@ -30,6 +32,12 @@ public class ClientActivity extends InterfaceActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client);
         finish();
+
+        MAC = getIntent().getStringExtra(EXTRA_MAC);
+        if (MAC == null) {
+            Log.wtf(TAG, "Got MAC is null");
+            finish();
+        }
 
         Intent intent = new Intent(this, RequestService.class);
         intent.putExtra(RequestService.ACTION, RequestService.GET_PREAPPROVAL);
