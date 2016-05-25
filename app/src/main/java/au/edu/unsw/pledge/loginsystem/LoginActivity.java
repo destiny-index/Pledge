@@ -141,7 +141,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
                         progressDialog.dismiss();
                     }
-                }, 6000);
+                }, 3000);
     }
 
 
