@@ -26,6 +26,9 @@ public class RequestService extends Service implements RequestThread.RequestList
     public static final String ACTION =
             "au.edu.unsw.pledge.preapproval.RequestService.ACTION";
 
+    public static final String CHARGE_AMOUNT =
+            "au.edu.unsw.pledge.preapproval.RequestService.CHARGE_AMOUNT";
+
     // Accepted ACTION values
     public static final int GET_NONE = 0;
     public static final int GET_PREAPPROVAL = 1;
@@ -37,6 +40,7 @@ public class RequestService extends Service implements RequestThread.RequestList
     public int onStartCommand(Intent intent, int flags, int startId) {
         Toast.makeText(this, "Service Started", Toast.LENGTH_SHORT).show();
         try {
+
             RequestThread rt = new RequestThread(this, intent);
 
             thread = new Thread(rt);

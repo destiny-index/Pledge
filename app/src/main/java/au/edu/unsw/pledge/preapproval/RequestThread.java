@@ -1,6 +1,7 @@
 package au.edu.unsw.pledge.preapproval;
 
 import android.content.Intent;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,7 +35,10 @@ class RequestThread implements Runnable {
     private int action;
     private String confirmedPreapprovalKey;
 
+    private int amount;
+
     RequestThread(RequestListener listener, Intent intent) throws InvalidPropertiesFormatException {
+
         this.listener = listener;
 
         // Set the action field to what is stored in the intent or default to NONE
@@ -42,8 +46,13 @@ class RequestThread implements Runnable {
 
         // Check that we have a preapproval key to for getting a preapproved payment
         if (action == RequestService.GET_PREAPPROVED_PAYMENT) {
-            if (intent.getStringExtra(RequestService.PREAPPROVAL_KEY) != null)
+            if (intent.getStringExtra(RequestService.PREAPPROVAL_KEY) != null) {
                 confirmedPreapprovalKey = intent.getStringExtra(RequestService.PREAPPROVAL_KEY);
+                amount = intent.getIntExtra(RequestService.CHARGE_AMOUNT, -1);
+                if (amount == -1) {
+                    Log.wtf("Adrian", "this is not supposed to be there");
+                }
+            }
             else
                 throw new InvalidPropertiesFormatException("Missing Preapproval Key to get Payment");
         }
@@ -173,29 +182,29 @@ class RequestThread implements Runnable {
     }
 
     private String generatePaymentData() {
-        JSONObject json = new JSONObject();
-        try {
-            // TODO: Generate these values based on user configuration/settings
-            JSONObject receiverList = new JSONObject();
-            JSONArray receiver = new JSONArray();
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("amount", "1.00");
-            jsonObject.put("email", "pledge.developer+user1@gmail.com");
-            receiver.put(jsonObject);
-            receiverList.put("receiver", receiver);
+            JSONObject json = new JSONObject();
+            try {
+                // TODO: Generate these values based on user configuration/settings
+                JSONObject receiverList = new JSONObject();
+                JSONArray receiver = new JSONArray();
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("amount", Integer.toString(amount));
+                jsonObject.put("email", "pledge.developer+user1@gmail.com");
+                receiver.put(jsonObject);
+                receiverList.put("receiver", receiver);
 
-            json.put("actionType", "PAY");
-            json.put("preapprovalKey", confirmedPreapprovalKey);
-            json.put("currencyCode", "USD");
-            json.put("receiverList", receiverList);
-            json.put("returnUrl", "http://www.example.com/success.html");
-            json.put("cancelUrl", "http://www.example.com/failure.html");
-            json.put("requestEnvelope", "{\"errorLanguage\": \"en_US\",\"detailLevel\": \"ReturnAll\"}");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+                json.put("actionType", "PAY");
+                json.put("preapprovalKey", confirmedPreapprovalKey);
+                json.put("currencyCode", "USD");
+                json.put("receiverList", receiverList);
+                json.put("returnUrl", "http://www.example.com/success.html");
+                json.put("cancelUrl", "http://www.example.com/failure.html");
+                json.put("requestEnvelope", "{\"errorLanguage\": \"en_US\",\"detailLevel\": \"ReturnAll\"}");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
-        return json.toString();
+            return json.toString();
     }
 
     private String generatePreapprovalData() {
