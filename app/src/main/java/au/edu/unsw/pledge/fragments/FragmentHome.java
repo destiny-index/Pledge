@@ -62,6 +62,8 @@ public class FragmentHome extends Fragment{
     // Pledge amount
     private int pledgeAmount;
 
+    private String MAC = null;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -131,7 +133,7 @@ public class FragmentHome extends Fragment{
 
                 // Get the device MAC address, which is the last 17 chars in the View
                 String itemValue = (String) bluetoothList.getItemAtPosition(position);
-                String MAC = itemValue.substring(itemValue.length() - 17);
+                MAC = itemValue.substring(itemValue.length() - 17);
 
                 //dialog popup to get maximum amount pledged
                 builder = new AlertDialog.Builder(getContext());
@@ -148,6 +150,13 @@ public class FragmentHome extends Fragment{
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         pledgeAmount = Integer.parseInt(input.getText().toString());
+
+                        Log.v("Adrian", "got confirmation");
+                        Intent intent = new Intent(getActivity(), ClientActivity.class);
+                        intent.putExtra(ClientActivity.EXTRA_MAC, MAC);
+                        intent.putExtra(ClientActivity.EXTRA_AMOUNT, pledgeAmount);
+                        startActivity(intent);
+
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -159,10 +168,7 @@ public class FragmentHome extends Fragment{
 
                 builder.show();
 
-                Intent intent = new Intent(getActivity(), ClientActivity.class);
-                intent.putExtra(ClientActivity.EXTRA_MAC, MAC);
-                intent.putExtra(ClientActivity.EXTRA_AMOUNT, pledgeAmount);
-                startActivity(intent);
+
 
             }
         });

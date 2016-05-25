@@ -32,7 +32,6 @@ public class ClientActivity extends InterfaceActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client);
-        finish();
 
         MAC = getIntent().getStringExtra(EXTRA_MAC);
         if (MAC == null) {
@@ -55,7 +54,7 @@ public class ClientActivity extends InterfaceActivity {
                 Log.wtf(TAG, "This is not suppposed to happen");
             }
             String preApprovalKey = ppObj.getPreapprovalKey();
-
+            Toast.makeText(this, ""+preApprovalKey, Toast.LENGTH_LONG);
             // Pass BluetoothSocket and preApprovalKey to thread
             BluetoothDevice device = bluetoothAdapter.getRemoteDevice(MAC);
 
