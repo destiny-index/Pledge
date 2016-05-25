@@ -21,6 +21,7 @@ import au.edu.unsw.pledge.preapproval.RequestService;
 public class ClientActivity extends InterfaceActivity {
 
     public final static String EXTRA_MAC = "au.edu.unsw.pledge.MAC";
+    public final static String EXTRA_AMOUNT = "au.edu.unsw.pledge.AMOUNT";
 
     private final static String TAG = "ClientActivity";
     private final BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -31,7 +32,6 @@ public class ClientActivity extends InterfaceActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client);
-        finish();
 
         MAC = getIntent().getStringExtra(EXTRA_MAC);
         if (MAC == null) {
@@ -54,7 +54,7 @@ public class ClientActivity extends InterfaceActivity {
                 Log.wtf(TAG, "This is not suppposed to happen");
             }
             String preApprovalKey = ppObj.getPreapprovalKey();
-
+            Toast.makeText(this, ""+preApprovalKey, Toast.LENGTH_LONG);
             // Pass BluetoothSocket and preApprovalKey to thread
             BluetoothDevice device = bluetoothAdapter.getRemoteDevice(MAC);
 
