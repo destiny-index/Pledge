@@ -21,6 +21,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import au.edu.unsw.pledge.HostActivity;
 import au.edu.unsw.pledge.R;
 
 
@@ -52,6 +53,7 @@ public class FragmentHome extends Fragment{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
@@ -60,6 +62,15 @@ public class FragmentHome extends Fragment{
 
         View rootView = null;
         rootView = inflater.inflate(R.layout.fragment_one, container, false);
+
+        Button hostButton = (Button) rootView.findViewById(R.id.hostButton);
+        hostButton.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent hostIntent = new Intent(getActivity(), HostActivity.class);
+                startActivity(hostIntent);
+            }
+        });
         clientButton = (Button)rootView.findViewById(R.id.clientButton);
         mArrayAdapter = new ArrayAdapter<String>(getContext(), R.layout.bluetooth_list);
         bluetoothList = (ListView)rootView.findViewById(R.id.bluetoothList);
