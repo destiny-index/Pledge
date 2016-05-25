@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/Users/DavidVang/.gradle/caches/modules-2/files-2.1/com.firebase/firebase-client-jvm/2.3.1/4d53b7d6983247af02b8fe7e4228fff555a5e828/firebase-client-jvm-2.3.1.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="4d53b7d6983247af02b8fe7e4228fff555a5e828">
+        <dex dex="/Users/DavidVang/GitHub/Pledge/app/build/intermediates/pre-dexed/debug/firebase-client-jvm-2.3.1_a275300db9f93c304e06bb4e8a9dc25f438dde62.jar" />
+    </item>
+    <item
+        jar="/Users/DavidVang/GitHub/Pledge/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="de4db3785756bfb0915a9f59a9b3f2fea7407be4">
+        <dex dex="/Users/DavidVang/GitHub/Pledge/app/build/intermediates/pre-dexed/debug/com.android.support-animated-vector-drawable-23.4.0_117fc31fbb04b93d5c796b15286d8ddb91ace85e.jar" />
+    </item>
+    <item
+        jar="/Users/DavidVang/GitHub/Pledge/app/build/intermediates/exploded-aar/com.android.support/design/23.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="5326d9a850d491714fef8cbfaa9ea3416f0bf0d2">
+        <dex dex="/Users/DavidVang/GitHub/Pledge/app/build/intermediates/pre-dexed/debug/com.android.support-design-23.4.0_a4111796d9abda38fb74fb8b9b2b4dd2ab4c51a7.jar" />
+    </item>
+    <item
+        jar="/Users/DavidVang/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/23.4.0/support-annotations-23.4.0.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="ffbe55fdb2bb456b1485831706a9eac3300bb6b8">
+        <dex dex="/Users/DavidVang/GitHub/Pledge/app/build/intermediates/pre-dexed/debug/support-annotations-23.4.0_1e191d5bfbceb7ab985f1dd0d916123bfa01a085.jar" />
+    </item>
+    <item
+        jar="/Users/DavidVang/GitHub/Pledge/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="c2c594cace5d83a3227b2b6e658ecbfd586d3ed9">
+        <dex dex="/Users/DavidVang/GitHub/Pledge/app/build/intermediates/pre-dexed/debug/com.android.support-support-vector-drawable-23.4.0_61c377abf023384749f2f4e11f5a1969112a0d50.jar" />
+    </item>
+    <item
+        jar="/Users/DavidVang/GitHub/Pledge/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="548f06de403a9409f00554b3ee12a9fdea0e236c">
+        <dex dex="/Users/DavidVang/GitHub/Pledge/app/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-23.4.0_d1d303f8b5a609eeb9849653074bd47f93e6c432.jar" />
+    </item>
+    <item
+        jar="/Users/DavidVang/GitHub/Pledge/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/jars/libs/internal_impl-23.4.0.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="ea3c07504d2c8f4b13aa17c45c1b68ed9c1c3674">
+        <dex dex="/Users/DavidVang/GitHub/Pledge/app/build/intermediates/pre-dexed/debug/internal_impl-23.4.0_4c7f04682f4bce4617d625a442545c154b0ac347.jar" />
+    </item>
+    <item
+        jar="/Users/DavidVang/GitHub/Pledge/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="67bd36ee9340ec7c254108936ad16b24bed160cc">
+        <dex dex="/Users/DavidVang/GitHub/Pledge/app/build/intermediates/pre-dexed/debug/com.android.support-support-v4-23.4.0_6d2a1ad60fbf9c0c52b8df484bdb2500f271ed19.jar" />
+    </item>
+    <item
+        jar="/Users/DavidVang/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-core/2.2.2/d20be6a5ddd6f8cfd36ebf6dea329873a1c41f1b/jackson-core-2.2.2.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="d20be6a5ddd6f8cfd36ebf6dea329873a1c41f1b">
+        <dex dex="/Users/DavidVang/GitHub/Pledge/app/build/intermediates/pre-dexed/debug/jackson-core-2.2.2_b5cdfdf373909a3405f950a52579d81ec75c2949.jar" />
+    </item>
+    <item
+        jar="/Users/DavidVang/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-databind/2.2.2/3c8f6018eaa72d43b261181e801e6f8676c16ef6/jackson-databind-2.2.2.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="3c8f6018eaa72d43b261181e801e6f8676c16ef6">
+        <dex dex="/Users/DavidVang/GitHub/Pledge/app/build/intermediates/pre-dexed/debug/jackson-databind-2.2.2_2552a14edce2ea95ed869f811bdbb8e864f94bb2.jar" />
+    </item>
+    <item
+        jar="/Users/DavidVang/GitHub/Pledge/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="ec75036c3c52e451d0cde50a5aedaf5fd32354a0">
+        <dex dex="/Users/DavidVang/GitHub/Pledge/app/build/intermediates/pre-dexed/debug/com.android.support-recyclerview-v7-23.4.0_92d1e77f648903eca47feecb745459af0d8ff76e.jar" />
+    </item>
+    <item
+        jar="/Users/DavidVang/.gradle/caches/modules-2/files-2.1/com.firebase/firebase-client-android/2.3.1/be29b24233711c419ce935aa0a1b12ebc49d1c9a/firebase-client-android-2.3.1.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="be29b24233711c419ce935aa0a1b12ebc49d1c9a">
+        <dex dex="/Users/DavidVang/GitHub/Pledge/app/build/intermediates/pre-dexed/debug/firebase-client-android-2.3.1_af3a0cd54f9c917e26af67a9377f6bfe3dbb0215.jar" />
+    </item>
+    <item
+        jar="/Users/DavidVang/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-annotations/2.2.2/285cb9c666f0f0f3dd8a1be04e1f457eb7b15113/jackson-annotations-2.2.2.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="285cb9c666f0f0f3dd8a1be04e1f457eb7b15113">
+        <dex dex="/Users/DavidVang/GitHub/Pledge/app/build/intermediates/pre-dexed/debug/jackson-annotations-2.2.2_410afab5563724893d86cdffef8372beaceae090.jar" />
+    </item>
+    <item
+        jar="/Users/DavidVang/.gradle/caches/modules-2/files-2.1/com.firebase/tubesock/0.0.11/d37cb67277928cf59344b4196af8d9cee1f1a27c/tubesock-0.0.11.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="d37cb67277928cf59344b4196af8d9cee1f1a27c">
+        <dex dex="/Users/DavidVang/GitHub/Pledge/app/build/intermediates/pre-dexed/debug/tubesock-0.0.11_a82f9c1ebdde1421fe0d5359e4cb5c10c3f245a0.jar" />
+    </item>
+    <item
+        jar="/Users/DavidVang/GitHub/Pledge/app/libs/PayPal_MPL.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="8d21b06697d4b084b03d0760fcfb2c316cb05331">
+        <dex dex="/Users/DavidVang/GitHub/Pledge/app/build/intermediates/pre-dexed/debug/PayPal_MPL_12854257eefec98c935b7dd1b949e34a37d33760.jar" />
+    </item>
+    <item
+        jar="/Users/DavidVang/.gradle/caches/modules-2/files-2.1/com.jakewharton/butterknife/7.0.1/d5d13ea991eab0252e3710e5df3d6a9d4b21d461/butterknife-7.0.1.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="d5d13ea991eab0252e3710e5df3d6a9d4b21d461">
+        <dex dex="/Users/DavidVang/GitHub/Pledge/app/build/intermediates/pre-dexed/debug/butterknife-7.0.1_f310c81e781b3b7557fe13739457d7a3b8f10199.jar" />
+    </item>
+
+</items>
