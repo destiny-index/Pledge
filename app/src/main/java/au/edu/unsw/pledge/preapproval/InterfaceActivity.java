@@ -18,8 +18,8 @@ import com.paypal.android.MEP.PayPalPreapproval;
 import au.edu.unsw.pledge.R;
 
 public class InterfaceActivity extends AppCompatActivity {
-    static final int PREAPPROVAL_REQUEST = 1;
-    PayPal ppObj;
+    protected static final int PREAPPROVAL_REQUEST = 1;
+    protected PayPal ppObj;
 
     /* This broadcast receiver will detect when the unconfirmed preapproval key is generated and
      * use the mobile payments library (MPL) to let the user confirm (or decline). */
@@ -45,8 +45,7 @@ public class InterfaceActivity extends AppCompatActivity {
                     startActivityForResult(preapprovalIntent, PREAPPROVAL_REQUEST);
                 }
             } else if (intent.getAction() == RequestService.PAYMENT_COMPLETE) {
-                ((TextView) findViewById(R.id.paypal_receiver))
-                        .append("\n Payment Complete");
+                ((TextView) findViewById(R.id.paypal_receiver)).append("\n Payment Complete");
             }
         }
     };
@@ -79,43 +78,43 @@ public class InterfaceActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.preapproval_confirm);
-
-        Button preapprovalButton = (Button) findViewById(R.id.start_preapproval_button);
-        preapprovalButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Start a service to obtain an preapproved payment for the user to confirm\
-                Intent intent = new Intent(v.getContext(), RequestService.class);
-                intent.putExtra(RequestService.ACTION, RequestService.GET_PREAPPROVAL);
-                startService(intent);
-            }
-        });
-
-        Button paymentButton = (Button) findViewById(R.id.get_preapproved_payment);
-        paymentButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Start a service to get paid
-                // TODO: loop over preapproval keys and get payment
-                if (ppObj != null && ppObj.getPreapprovalKey() != null) {
-                    /* For now, we get the preappoval key from ppObj.getPreapprovalKey,
-                     * but we can just use any preapproval key we want. Just put it in the intent
-                     * and use it to start a RequestService
-                     */
-                    Intent intent = new Intent(v.getContext(), RequestService.class);
-                    intent.putExtra(RequestService.ACTION, RequestService.GET_PREAPPROVED_PAYMENT);
-                    intent.putExtra(RequestService.PREAPPROVAL_KEY, ppObj.getPreapprovalKey());
-                    startService(intent);
-                } else {
-                    Toast.makeText(v.getContext(), "No preapproval key!", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.preapproval_confirm);
+//
+//        Button preapprovalButton = (Button) findViewById(R.id.start_preapproval_button);
+//        preapprovalButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // Start a service to obtain an preapproved payment for the user to confirm\
+//                Intent intent = new Intent(v.getContext(), RequestService.class);
+//                intent.putExtra(RequestService.ACTION, RequestService.GET_PREAPPROVAL);
+//                startService(intent);
+//            }
+//        });
+//
+//        Button paymentButton = (Button) findViewById(R.id.get_preapproved_payment);
+//        paymentButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // Start a service to get paid
+//                // TODO: loop over preapproval keys and get payment
+//                if (ppObj != null && ppObj.getPreapprovalKey() != null) {
+//                    /* For now, we get the preappoval key from ppObj.getPreapprovalKey,
+//                     * but we can just use any preapproval key we want. Just put it in the intent
+//                     * and use it to start a RequestService
+//                     */
+//                    Intent intent = new Intent(v.getContext(), RequestService.class);
+//                    intent.putExtra(RequestService.ACTION, RequestService.GET_PREAPPROVED_PAYMENT);
+//                    intent.putExtra(RequestService.PREAPPROVAL_KEY, ppObj.getPreapprovalKey());
+//                    startService(intent);
+//                } else {
+//                    Toast.makeText(v.getContext(), "No preapproval key!", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
+//    }
 
     @Override
     protected void onPause() {
