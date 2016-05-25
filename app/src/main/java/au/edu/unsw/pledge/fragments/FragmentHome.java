@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,6 +82,7 @@ public class FragmentHome extends Fragment{
         // Register for broadcasts when discovery has finished
         getActivity().registerReceiver(mReceiver, filterFinished);
 
+        Log.v("Adrian", "Starting FragmentHome");
         // BluetoothAdaptor
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (mBluetoothAdapter == null) {
@@ -153,6 +155,7 @@ public class FragmentHome extends Fragment{
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             // When discovery finds a device
+            Log.v("Adrian", "onReceive"+action);
             if (BluetoothDevice.ACTION_FOUND.equals(action)) {
                 // Get the BluetoothDevice object from the Intent
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
@@ -164,6 +167,8 @@ public class FragmentHome extends Fragment{
                     }
                 }
                 if(!flag) {
+                    Log.v("Adrian", "deviceAddress"+device.getAddress());
+                    Toast.makeText(getActivity(), ""+device.getAddress(), Toast.LENGTH_SHORT);
                     noDupDevices.add(device.getName() + " " + device.getAddress());
                     mArrayAdapter.add(device.getName() + "\n" + device.getAddress());
                 }
