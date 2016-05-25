@@ -26,10 +26,14 @@ public class HostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_host);
 
+        Log.v(TAG, "Starting Host");
+
+
         Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
 
         // value of 0 means the device is always discoverable
         discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 0);
+        startActivityForResult(discoverableIntent, REQUEST_ENABLE_DISCOVERABLE);
     }
 
     @Override
@@ -38,6 +42,7 @@ public class HostActivity extends AppCompatActivity {
         switch(requestCode) {
             case REQUEST_ENABLE_DISCOVERABLE:
                 if (resultCode != RESULT_CANCELED) {
+                    Log.v(TAG, "Got discoverable");
                     startServer();
                 } else {
                     Toast.makeText(this, "Must allow discoverable", Toast.LENGTH_SHORT);
