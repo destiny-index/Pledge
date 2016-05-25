@@ -5,10 +5,13 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,12 +19,14 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.UUID;
 
+import au.edu.unsw.pledge.ClientActivity;
 import au.edu.unsw.pledge.HostActivity;
 import au.edu.unsw.pledge.R;
 
@@ -50,6 +55,12 @@ public class FragmentHome extends Fragment{
     // View
     Button clientButton;    //client button that find bluetooth devices
     ListView bluetoothList; //list of bluetooth devices found
+
+    // Popup dialog
+    AlertDialog.Builder builder;
+
+    // Pledge amount
+    private int pledgeAmount;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -122,8 +133,37 @@ public class FragmentHome extends Fragment{
                 String itemValue = (String) bluetoothList.getItemAtPosition(position);
                 String MAC = itemValue.substring(itemValue.length() - 17);
 
-                // Initiate a connection request in a separate thread
-                Toast.makeText(getContext(), MAC, Toast.LENGTH_LONG).show();
+                //dialog popup to get maximum amount pledged
+                builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("Set pledge amount to " + itemValue);
+
+                // Set up the input
+                final EditText input = new EditText(getContext());
+                // Specify the type of input expected
+                input.setInputType(InputType.TYPE_CLASS_NUMBER);
+                builder.setView(input);
+
+                // Set up the buttons
+                builder.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        pledgeAmount = Integer.parseInt(input.getText().toString());
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                builder.show();
+
+                Intent intent = new Intent(getActivity(), ClientActivity.class);
+                intent.putExtra(ClientActivity.EXTRA_MAC, MAC);
+                intent.putExtra(ClientActivity.EXTRA_AMOUNT, pledgeAmount);
+                startActivity(intent);
+
             }
         });
 
