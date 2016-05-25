@@ -87,7 +87,7 @@ public class FragmentHome extends Fragment{
             }
         });
         clientButton = (Button)rootView.findViewById(R.id.clientButton);
-        mArrayAdapter = new ArrayAdapter<String>(getContext(), R.layout.bluetooth_list);
+        mArrayAdapter = new ArrayAdapter<String>(getActivity(), R.layout.bluetooth_list);
         bluetoothList = (ListView)rootView.findViewById(R.id.bluetoothList);
         bluetoothList.setAdapter(mArrayAdapter);
         noDupDevices = new ArrayList<String>();
@@ -120,7 +120,7 @@ public class FragmentHome extends Fragment{
                     noDupDevices.clear();
                     mArrayAdapter.clear();
                     // Request discover from BluetoothAdapter
-                    Toast.makeText(getContext(), "Searching devices", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "Searching devices", Toast.LENGTH_LONG).show();
                     mBluetoothAdapter.startDiscovery();
                 }
             }
@@ -137,11 +137,11 @@ public class FragmentHome extends Fragment{
                 MAC = itemValue.substring(itemValue.length() - 17);
 
                 //dialog popup to get maximum amount pledged
-                builder = new AlertDialog.Builder(getContext());
+                builder = new AlertDialog.Builder(getActivity());
                 builder.setTitle("Set pledge amount to " + itemValue);
 
                 // Set up the input
-                final EditText input = new EditText(getContext());
+                final EditText input = new EditText(getActivity());
                 // Specify the type of input expected
                 input.setInputType(InputType.TYPE_CLASS_NUMBER);
                 builder.setView(input);
@@ -187,11 +187,11 @@ public class FragmentHome extends Fragment{
         if (requestCode == REQUEST_ENABLE_BT) {
             if (resultCode == Activity.RESULT_OK) {
                 // The user enabled bluetooth
-                Toast.makeText(getContext(), "Bluetooth enabled", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Bluetooth enabled", Toast.LENGTH_LONG).show();
             }
             if (resultCode == Activity.RESULT_CANCELED) {
                 // The user refused to enable bluetooth
-                Toast.makeText(getContext(), "Please enable Bluetooth", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Please enable Bluetooth", Toast.LENGTH_LONG).show();
             }
         }
     }
