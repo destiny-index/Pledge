@@ -1,14 +1,14 @@
 package au.edu.unsw.pledge.fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.preference.PreferenceFragment;
 
 import au.edu.unsw.pledge.R;
 
-public class FragmentSettings extends Fragment{
+public class FragmentSettings extends PreferenceFragment {
+    SharedPreferences sharedPref;
 
     public FragmentSettings() {
         // Required empty public constructor
@@ -17,13 +17,15 @@ public class FragmentSettings extends Fragment{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Load the preferences from an XML resource
+        addPreferencesFromResource(R.xml.preferences);
+
+        Context context = this.getActivity();
+        sharedPref = context.getSharedPreferences(
+                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+
+        
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_three, container, false);
-    }
 
 }

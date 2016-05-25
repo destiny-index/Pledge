@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <EditTextPreference
+        android:id="@+id/paypal_email"
+        android:key="pref_paymentAccount"
+        android:title="PayPal Email"
+        android:defaultValue=""
+        android:summary="Split payments are reimbursed into this account" />
+    <EditTextPreference
+        android:numeric="integer"
+        android:key="pref_paymentLimit"
+        android:title="Payment Limit"
+        android:defaultValue="20"
+        android:summary="Maximum $ value to pledge" />
+</PreferenceScreen>

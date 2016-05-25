@@ -1,12 +1,16 @@
 package au.edu.unsw.pledge;
 
+import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+
+import android.app.FragmentManager;
+import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.Menu;
@@ -16,12 +20,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.firebase.client.Firebase;
+
 import au.edu.unsw.pledge.fragments.FragmentHome;
 import au.edu.unsw.pledge.fragments.FragmentPayment;
 import au.edu.unsw.pledge.fragments.FragmentSettings;
 import au.edu.unsw.pledge.loginsystem.LoginActivity;
 
 public class MainActivity extends AppCompatActivity {
+
     private Firebase mRef;
     private int[] tabIcons = {
             R.drawable.icwifi,
@@ -36,6 +42,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Set preferences
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this); // ensure defaults are set
+        if (prefs.getString("pref_paymentAccount", "").equals("") && getIntent().hasExtra("email")) {
+            System.out.println(getIntent().getStringExtra("email"));
+            prefs.edit().putString("pref_paymentAccount", getIntent().getStringExtra("email")).commit();
+        }
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
@@ -55,18 +69,21 @@ public class MainActivity extends AppCompatActivity {
 //        Intent intent = new Intent(this, LoginActivity.class);
 //        startActivity(intent);
     }
+
     private void setupTabIcons() {
         tabLayout.getTabAt(0).setIcon(tabIcons[0]);
         tabLayout.getTabAt(1).setIcon(tabIcons[1]);
         tabLayout.getTabAt(2).setIcon(tabIcons[2]);
     }
+
     private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getFragmentManager());
         adapter.addFrag(new FragmentHome(), "Home");
         adapter.addFrag(new FragmentPayment(), "Payment");
         adapter.addFrag(new FragmentSettings(), "Settings");
         viewPager.setAdapter(adapter);
     }
+
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
@@ -95,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
             return mFragmentTitleList.get(position);
         }
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
