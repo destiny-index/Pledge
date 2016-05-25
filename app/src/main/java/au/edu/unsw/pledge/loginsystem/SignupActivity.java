@@ -23,7 +23,6 @@ import butterknife.ButterKnife;
 public class SignupActivity extends AppCompatActivity {
     private static final String TAG = "SignupActivity";
     private Firebase ref;
-    private int signup_f = 0;
     @Bind(R.id.input_name)
     EditText _nameText;
     @Bind(R.id.input_email)
@@ -102,15 +101,14 @@ public class SignupActivity extends AppCompatActivity {
                             .setPositiveButton(R.string.login_button_label, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-//                                    Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
-//                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                                    startActivity(intent);
+                                    Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    startActivity(intent);
                                 }
                             });
                     AlertDialog dialog = builder.create();
                     dialog.show();
-                    signup_f = 1;
                 }
 
                 @Override
@@ -121,7 +119,6 @@ public class SignupActivity extends AppCompatActivity {
                             .setPositiveButton(android.R.string.ok, null);
                     AlertDialog dialog = builder.create();
                     dialog.show();
-                    signup_f = 0;
                 }
             });
         }
@@ -130,11 +127,8 @@ public class SignupActivity extends AppCompatActivity {
                     public void run() {
                         // On complete call either onSignupSuccess or onSignupFailed
                         // depending on success
-                        if(signup_f == 1) {
-                            onSignupSuccess();
-                        } else {
-                            onSignupFailed();
-                        }
+                        onSignupSuccess();
+                        // onSignupFailed();
                         progressDialog.dismiss();
                     }
                 }, 3000);
@@ -144,11 +138,7 @@ public class SignupActivity extends AppCompatActivity {
     public void onSignupSuccess() {
         _signupButton.setEnabled(true);
         setResult(RESULT_OK, null);
-        //finish();
-        Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
+        finish();
     }
 
     public void onSignupFailed() {
