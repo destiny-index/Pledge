@@ -73,7 +73,8 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-
+    String email;
+    String password;
     public void login() {
         Log.d(TAG, "Login");
 
@@ -90,8 +91,8 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.setMessage("Authenticating...");
         progressDialog.show();
 
-        String email = _emailText.getText().toString();
-        String password = _passwordText.getText().toString();
+        email = _emailText.getText().toString();
+        password = _passwordText.getText().toString();
 
         // TODO: Implement your own authentication logic here.
         if (email.isEmpty() || password.isEmpty()) {
@@ -168,6 +169,7 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.putExtra("email", email);
         startActivity(intent);
     }
 
