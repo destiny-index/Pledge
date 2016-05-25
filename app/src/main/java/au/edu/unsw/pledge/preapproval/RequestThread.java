@@ -1,6 +1,10 @@
 package au.edu.unsw.pledge.preapproval;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,7 +38,10 @@ class RequestThread implements Runnable {
     private int action;
     private String confirmedPreapprovalKey;
 
+    private int amount;
+
     RequestThread(RequestListener listener, Intent intent) throws InvalidPropertiesFormatException {
+
         this.listener = listener;
 
         // Set the action field to what is stored in the intent or default to NONE
@@ -42,9 +49,13 @@ class RequestThread implements Runnable {
 
         // Check that we have a preapproval key to for getting a preapproved payment
         if (action == RequestService.GET_PREAPPROVED_PAYMENT) {
-            if (intent.getStringExtra(RequestService.PREAPPROVAL_KEY) != null)
+            if (intent.getStringExtra(RequestService.PREAPPROVAL_KEY) != null) {
                 confirmedPreapprovalKey = intent.getStringExtra(RequestService.PREAPPROVAL_KEY);
-            else
+                amount = intent.getIntExtra(RequestService.CHARGE_AMOUNT, -1);
+                if (amount == -1) {
+                    Log.wtf("Adrian", "this is not supposed to be there");
+                }
+            } else
                 throw new InvalidPropertiesFormatException("Missing Preapproval Key to get Payment");
         }
 
@@ -176,11 +187,13 @@ class RequestThread implements Runnable {
         JSONObject json = new JSONObject();
         try {
             // TODO: Generate these values based on user configuration/settings
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences((Context) listener);
+
             JSONObject receiverList = new JSONObject();
             JSONArray receiver = new JSONArray();
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("amount", "1.00");
-            jsonObject.put("email", "pledge.developer+user1@gmail.com");
+            jsonObject.put("amount", Integer.toString(amount));
+            jsonObject.put("email", prefs.getString("pref_paymentAccount", null));
             receiver.put(jsonObject);
             receiverList.put("receiver", receiver);
 
@@ -209,13 +222,14 @@ class RequestThread implements Runnable {
         String startingDate = (new SimpleDateFormat("yyyy-MM-dd")).format(today);
         String endingDate = (new SimpleDateFormat("yyyy-MM-dd")).format(tomorrow);
 
-        // TODO: Generate these values based on user configuration/settings
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences((Context) listener);
+
         dataMap.put("startingDate", startingDate + "Z");
         dataMap.put("endingDate", endingDate + "Z");
         dataMap.put("currencyCode", "USD");
         dataMap.put("returnUrl", "http://www.example.com/success.html");
         dataMap.put("cancelUrl", "http://www.example.com/failure.html");
-        dataMap.put("maxAmountPerPayment", "20.00");
+        dataMap.put("maxAmountPerPayment", prefs.getString("pref_paymentLimit", null));
         dataMap.put("maxNumberOfPayments", "1");
         dataMap.put("maxTotalAmountOfAllPayments", "800.00");
         dataMap.put("requestEnvelope", "{\"errorLanguage\": \"en_US\",\"detailLevel\": \"ReturnAll\"}");

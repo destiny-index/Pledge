@@ -11,4 +11,10 @@
     <string name="signup_error_title">Error!</string>
     <string name="signup_success">Account successfully created! You can now Login.</string>
     <string name="login_button_label">Login</string>
+    <string name="preference_file_key">au.edu.unsw.pledge.PREFERENCE_FILE_KEY</string>
+    <string-array name="prefs_string_array">
+        <item>array_string1</item>
+        <item>array_string2</item>
+        <item>array_string3</item>
+    </string-array>
 </resources>

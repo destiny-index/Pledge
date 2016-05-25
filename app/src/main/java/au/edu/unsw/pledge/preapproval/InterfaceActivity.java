@@ -29,9 +29,6 @@ public class InterfaceActivity extends AppCompatActivity {
             if (intent.getAction() == RequestService.PREAPPROVAL_KEY_OBTAINED) {
                 // Update the display with the preapproval key
                 String preapprovalKey = intent.getStringExtra(RequestService.PREAPPROVAL_KEY);
-                ((TextView) findViewById(R.id.paypal_receiver))
-                        .setText("Preapproval Key: " + preapprovalKey);
-
                 // Initialise the paypal mobile payments library (MPL)
                 ppObj = PayPal.initWithAppID(context, "APP-80W284485P519543T", PayPal.ENV_SANDBOX);
                 if (ppObj != null) {
@@ -45,7 +42,6 @@ public class InterfaceActivity extends AppCompatActivity {
                     startActivityForResult(preapprovalIntent, PREAPPROVAL_REQUEST);
                 }
             } else if (intent.getAction() == RequestService.PAYMENT_COMPLETE) {
-                ((TextView) findViewById(R.id.paypal_receiver)).append("\n Payment Complete");
             }
         }
     };

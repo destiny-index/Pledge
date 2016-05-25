@@ -5,23 +5,29 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+//import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
+import android.text.InputType;
 import android.util.Log;
+import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.UUID;
 
+import au.edu.unsw.pledge.ClientActivity;
 import au.edu.unsw.pledge.HostActivity;
 import au.edu.unsw.pledge.R;
 
@@ -51,6 +57,14 @@ public class FragmentHome extends Fragment{
     Button clientButton;    //client button that find bluetooth devices
     ListView bluetoothList; //list of bluetooth devices found
 
+    // Popup dialog
+    AlertDialog.Builder builder;
+
+    // Pledge amount
+    private int pledgeAmount;
+
+    private String MAC = null;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +87,7 @@ public class FragmentHome extends Fragment{
             }
         });
         clientButton = (Button)rootView.findViewById(R.id.clientButton);
-        mArrayAdapter = new ArrayAdapter<String>(getContext(), R.layout.bluetooth_list);
+        mArrayAdapter = new ArrayAdapter<String>(getActivity(), R.layout.bluetooth_list);
         bluetoothList = (ListView)rootView.findViewById(R.id.bluetoothList);
         bluetoothList.setAdapter(mArrayAdapter);
         noDupDevices = new ArrayList<String>();
@@ -106,7 +120,7 @@ public class FragmentHome extends Fragment{
                     noDupDevices.clear();
                     mArrayAdapter.clear();
                     // Request discover from BluetoothAdapter
-                    Toast.makeText(getContext(), "Searching devices", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "Searching devices", Toast.LENGTH_LONG).show();
                     mBluetoothAdapter.startDiscovery();
                 }
             }
@@ -120,10 +134,43 @@ public class FragmentHome extends Fragment{
 
                 // Get the device MAC address, which is the last 17 chars in the View
                 String itemValue = (String) bluetoothList.getItemAtPosition(position);
-                String MAC = itemValue.substring(itemValue.length() - 17);
+                MAC = itemValue.substring(itemValue.length() - 17);
 
-                // Initiate a connection request in a separate thread
-                Toast.makeText(getContext(), MAC, Toast.LENGTH_LONG).show();
+                //dialog popup to get maximum amount pledged
+                builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Set pledge amount to " + itemValue);
+
+                // Set up the input
+                final EditText input = new EditText(getActivity());
+                // Specify the type of input expected
+                input.setInputType(InputType.TYPE_CLASS_NUMBER);
+                builder.setView(input);
+
+                // Set up the buttons
+                builder.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        pledgeAmount = Integer.parseInt(input.getText().toString());
+
+                        Log.v("Adrian", "got confirmation");
+                        Intent intent = new Intent(getActivity(), ClientActivity.class);
+                        intent.putExtra(ClientActivity.EXTRA_MAC, MAC);
+                        intent.putExtra(ClientActivity.EXTRA_AMOUNT, pledgeAmount);
+                        startActivity(intent);
+
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                builder.show();
+
+
+
             }
         });
 
@@ -140,11 +187,11 @@ public class FragmentHome extends Fragment{
         if (requestCode == REQUEST_ENABLE_BT) {
             if (resultCode == Activity.RESULT_OK) {
                 // The user enabled bluetooth
-                Toast.makeText(getContext(), "Bluetooth enabled", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Bluetooth enabled", Toast.LENGTH_LONG).show();
             }
             if (resultCode == Activity.RESULT_CANCELED) {
                 // The user refused to enable bluetooth
-                Toast.makeText(getContext(), "Please enable Bluetooth", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Please enable Bluetooth", Toast.LENGTH_LONG).show();
             }
         }
     }
