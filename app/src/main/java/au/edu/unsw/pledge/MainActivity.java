@@ -38,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
     //private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
 
+    SharedPreferences prefs;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Set preferences
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this); // ensure defaults are set
+        prefs = PreferenceManager.getDefaultSharedPreferences(this); // ensure defaults are set
         if (prefs.getString("pref_paymentAccount", "").equals("") && getIntent().hasExtra("email")) {
             System.out.println(getIntent().getStringExtra("email"));
             prefs.edit().putString("pref_paymentAccount", getIntent().getStringExtra("email")).commit();
