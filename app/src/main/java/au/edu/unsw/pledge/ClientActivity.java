@@ -23,7 +23,7 @@ public class ClientActivity extends InterfaceActivity {
     public final static String EXTRA_MAC = "au.edu.unsw.pledge.MAC";
     public final static String EXTRA_AMOUNT = "au.edu.unsw.pledge.AMOUNT";
 
-    private final static String TAG = "ClientActivity";
+    private final static String TAG = "Adrian";
     private final BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
     private String MAC = null;

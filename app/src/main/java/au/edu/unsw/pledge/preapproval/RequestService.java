@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.util.InvalidPropertiesFormatException;
@@ -36,17 +37,21 @@ public class RequestService extends Service implements RequestThread.RequestList
 
     Thread thread; // worker thread
 
+    private static final String TAG = "Adrian";
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Toast.makeText(this, "Service Started", Toast.LENGTH_SHORT).show();
+        Log.i(TAG, "RequestService, before try onStartCommand");
         try {
-
+            Log.i(TAG, "RequestService, onStartCommand");
             RequestThread rt = new RequestThread(this, intent);
 
             thread = new Thread(rt);
             thread.start();
         } catch (InvalidPropertiesFormatException e) {
             // Can't start a request thread
+            Log.v(TAG, "InvalidPropetrtiesFormatException");
             this.stopSelf();
         }
         return START_STICKY;
