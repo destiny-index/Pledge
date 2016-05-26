@@ -25,7 +25,12 @@ import java.util.InvalidPropertiesFormatException;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import au.edu.unsw.pledge.ClientActivity;
+
 class RequestThread implements Runnable {
+
+    private final static String TAG = "Adrian";
+
     public interface RequestListener {
         void preapprovalKeyObtained(String key);
 
@@ -41,7 +46,7 @@ class RequestThread implements Runnable {
     private int amount;
 
     RequestThread(RequestListener listener, Intent intent) throws InvalidPropertiesFormatException {
-
+//        Log.i(TAG, "RequestThread constructor");
         this.listener = listener;
 
         // Set the action field to what is stored in the intent or default to NONE
@@ -51,7 +56,7 @@ class RequestThread implements Runnable {
         if (action == RequestService.GET_PREAPPROVED_PAYMENT) {
             if (intent.getStringExtra(RequestService.PREAPPROVAL_KEY) != null) {
                 confirmedPreapprovalKey = intent.getStringExtra(RequestService.PREAPPROVAL_KEY);
-                amount = intent.getIntExtra(RequestService.CHARGE_AMOUNT, -1);
+                amount = intent.getIntExtra(ClientActivity.EXTRA_AMOUNT, -1);
                 if (amount == -1) {
                     Log.wtf("Adrian", "this is not supposed to be there");
                 }
@@ -79,9 +84,10 @@ class RequestThread implements Runnable {
         String response = null;
 
         try {
+            Log.i(TAG, "in getPreApprovalKey after");
             URL url = new URL("https://svcs.sandbox.paypal.com/AdaptivePayments/Preapproval");
             HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
-
+            Log.i(TAG, "getPreApprovalKey: got connection");
             conn.setRequestMethod("POST");
 
             String request = generatePreapprovalData();
@@ -240,10 +246,13 @@ class RequestThread implements Runnable {
 
     @Override
     public void run() {
+        Log.i(TAG, "In RequestThread, running");
         while (!Thread.interrupted()) {
             try {
                 if (action == RequestService.GET_PREAPPROVAL) {
+                    Log.i(TAG, "Getting preapproval key");
                     String preapprovalKey = getPreapprovalKey();
+                    Log.i(TAG, "Preapproval key is" + preapprovalKey);
 
                     // we get here if the above has not thrown an exception
                     listener.preapprovalKeyObtained(preapprovalKey);
@@ -256,11 +265,13 @@ class RequestThread implements Runnable {
                     }
                 }
             } catch (JSONKeyException e) {
+                Log.i(TAG, "in JSONKeyException" + e);
                 e.printStackTrace();
                 // Stop trying to connect to PayPal API. Our data is malformed.
                 Thread.currentThread().interrupt();
                 listener.failed();
             } catch (IOException e) {
+                Log.i(TAG, "in IOException" + e);
                 // Connection error - Try again after a wait
                 try {
                     Thread.sleep(8000);

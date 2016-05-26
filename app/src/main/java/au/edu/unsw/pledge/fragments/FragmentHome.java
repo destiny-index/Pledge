@@ -152,7 +152,7 @@ public class FragmentHome extends Fragment{
                     public void onClick(DialogInterface dialog, int which) {
                         pledgeAmount = Integer.parseInt(input.getText().toString());
 
-                        Log.v("Adrian", "got confirmation");
+                        Log.v("Adrian", "got yes dialog");
                         Intent intent = new Intent(getActivity(), ClientActivity.class);
                         intent.putExtra(ClientActivity.EXTRA_MAC, MAC);
                         intent.putExtra(ClientActivity.EXTRA_AMOUNT, pledgeAmount);

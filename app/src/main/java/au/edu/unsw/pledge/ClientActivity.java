@@ -23,7 +23,7 @@ public class ClientActivity extends InterfaceActivity {
     public final static String EXTRA_MAC = "au.edu.unsw.pledge.MAC";
     public final static String EXTRA_AMOUNT = "au.edu.unsw.pledge.AMOUNT";
 
-    private final static String TAG = "ClientActivity";
+    private final static String TAG = "Adrian";
     private final BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
     private String MAC = null;
@@ -41,6 +41,7 @@ public class ClientActivity extends InterfaceActivity {
 
         Intent intent = new Intent(this, RequestService.class);
         intent.putExtra(RequestService.ACTION, RequestService.GET_PREAPPROVAL);
+        //The intent also has EXTRA_AMOUNT
         startService(intent);
         /**
          * will call onActivityResult with requestCode PREAPPROVAL_REQUEST
@@ -113,6 +114,8 @@ public class ClientActivity extends InterfaceActivity {
 
                 out.println(payLoad);
                 while (!in.readLine().equals("GOT PREAPPROVAL")) {
+
+                    Log.v(TAG, "Sending Preapproval again");
                     out.println(payLoad);
                 }
 
