@@ -88,13 +88,6 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
     }
 
-    public void getPaymentFromKey(String preapprovalKey, BigDecimal chargeAmount) {
-        Intent intent = new Intent(getApplicationContext(), RequestService.class);
-        intent.putExtra(RequestService.ACTION, RequestService.GET_PREAPPROVED_PAYMENT);
-        intent.putExtra(RequestService.PREAPPROVAL_KEY, preapprovalKey);
-        intent.putExtra(RequestService.CHARGE_AMOUNT, chargeAmount.toString());
-        startService(intent);
-    }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();

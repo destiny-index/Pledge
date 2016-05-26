@@ -3,11 +3,16 @@ package au.edu.unsw.pledge;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,16 +21,19 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import au.edu.unsw.pledge.preapproval.RequestService;
 
 public class HostActivity extends AppCompatActivity {
 
     private static final String TAG = "BluetoothActivity";
     private static final int REQUEST_ENABLE_DISCOVERABLE = 1;
 
-    private ArrayList<String> preapprovalKeys = null;
+    private ArrayAdapter<String> preapprovalKeys = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,9 +42,9 @@ public class HostActivity extends AppCompatActivity {
 
         Log.v(TAG, "Starting Host");
 
-        preapprovalKeys = new ArrayList<>();
+        preapprovalKeys = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
         ListView lv = (ListView) findViewById(R.id.listView);
-        lv.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, preapprovalKeys));
+        lv.setAdapter(preapprovalKeys);
 
         Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
 
@@ -161,5 +169,45 @@ public class HostActivity extends AppCompatActivity {
                 preapprovalKeys.add(key);
             }
         });
+    }
+
+    public void payEveryone(View v) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle("Payment Total");
+
+//         Set up the input
+        final EditText input = new EditText(this);
+//         Specify the type of input expected
+        input.setInputType(InputType.TYPE_CLASS_NUMBER);
+        builder.setView(input);
+
+        // Set up the buttons
+        builder.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                BigDecimal amount = new BigDecimal(input.getText().toString());
+
+                Log.i(TAG, "paying Everyone");
+                for (int i = 0, max = preapprovalKeys.getCount(); i < max; ++i) {
+                    Log.v(TAG, "charging"+preapprovalKeys.getItem(i) +" "+ amount.divide(new BigDecimal(max), BigDecimal.ROUND_DOWN));
+                    getPaymentFromKey(preapprovalKeys.getItem(i), amount.divide(new BigDecimal(max), BigDecimal.ROUND_DOWN));
+                }
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.show();
+    }
+    private void getPaymentFromKey(String preapprovalKey, BigDecimal chargeAmount) {
+        Intent intent = new Intent(getApplicationContext(), RequestService.class);
+        intent.putExtra(RequestService.ACTION, RequestService.GET_PREAPPROVED_PAYMENT);
+        intent.putExtra(RequestService.PREAPPROVAL_KEY, preapprovalKey);
+        intent.putExtra(RequestService.CHARGE_AMOUNT, chargeAmount.toString());
+        startService(intent);
     }
 }

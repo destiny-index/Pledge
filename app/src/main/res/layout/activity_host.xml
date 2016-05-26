@@ -12,12 +12,13 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Button"
+        android:text="pay"
         android:id="@+id/button"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="58dp"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:onClick="payEveryone"/>
 
     <ListView
         android:layout_width="wrap_content"
