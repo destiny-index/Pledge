@@ -50,8 +50,14 @@ public class MainActivity extends AppCompatActivity {
         // Set preferences
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
         prefs = PreferenceManager.getDefaultSharedPreferences(this); // ensure defaults are set
-        if (prefs.getString("pref_paymentAccount", "").equals("") && getIntent().hasExtra("email")) {
-            System.out.println(getIntent().getStringExtra("email"));
+
+        // store the pledgeEmail when user logs in
+        if (getIntent() != null && getIntent().hasExtra("pledgeEmail")) {
+            prefs.edit().putString("pledgeEmail", getIntent().getStringExtra("email")).commit();
+        }
+
+        // if we do not have a paymentAccount, then use the pledge email as the default paymentAccount
+        if (prefs.getString("pref_paymentAccount", "").equals("") && getIntent() != null && getIntent().hasExtra("email")) {
             prefs.edit().putString("pref_paymentAccount", getIntent().getStringExtra("email")).commit();
         }
 
