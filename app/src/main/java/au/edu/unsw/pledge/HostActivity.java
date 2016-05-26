@@ -5,6 +5,7 @@ import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,7 +24,9 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import au.edu.unsw.pledge.preapproval.RequestService;
@@ -32,6 +35,9 @@ public class HostActivity extends AppCompatActivity {
 
     private static final String TAG = "BluetoothActivity";
     private static final int REQUEST_ENABLE_DISCOVERABLE = 1;
+
+    // This is to access the shared preferences
+    private static final String KEYS = "preapprovalKeys";
 
     private ArrayAdapter<String> preapprovalKeys = null;
 
@@ -42,10 +48,18 @@ public class HostActivity extends AppCompatActivity {
 
         Log.v(TAG, "Starting Host");
 
+        SharedPreferences sp = getPreferences(MODE_PRIVATE);
+        Set<String> set = sp.getStringSet(KEYS, null);
+
         preapprovalKeys = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
         ListView lv = (ListView) findViewById(R.id.listView);
         lv.setAdapter(preapprovalKeys);
 
+        if (set != null) {
+            for (String key : set) {
+                preapprovalKeys.add(key);
+            }
+        }
         Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
 
         // value of 0 means the device is always discoverable
@@ -171,6 +185,18 @@ public class HostActivity extends AppCompatActivity {
         });
     }
 
+    public void savePreapprovals(View v) {
+        SharedPreferences sp = getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+
+        ArrayList<String> underlying = new ArrayList<>();
+        for (int i=0; i < preapprovalKeys.getCount(); i++) {
+            underlying.add(preapprovalKeys.getItem(i));
+        }
+        editor.putStringSet(KEYS, new HashSet<>(underlying));
+        editor.commit();
+    }
+
     public void payEveryone(View v) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
@@ -194,6 +220,11 @@ public class HostActivity extends AppCompatActivity {
                     Log.v(TAG, "charging"+preapprovalKeys.getItem(i) +" "+ amount.divide(new BigDecimal(max + 1), BigDecimal.ROUND_DOWN));
                     getPaymentFromKey(preapprovalKeys.getItem(i), amount.divide(new BigDecimal(max + 1), BigDecimal.ROUND_DOWN));
                 }
+
+                SharedPreferences sp = getPreferences(MODE_PRIVATE);
+                SharedPreferences.Editor editor = sp.edit();
+                editor.remove(KEYS);
+
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
