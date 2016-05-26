@@ -57,7 +57,7 @@ class RequestThread implements Runnable {
         if (action == RequestService.GET_PREAPPROVED_PAYMENT) {
             if (intent.getStringExtra(RequestService.PREAPPROVAL_KEY) != null) {
                 confirmedPreapprovalKey = intent.getStringExtra(RequestService.PREAPPROVAL_KEY);
-                amount = intent.getStringExtra(ClientActivity.EXTRA_AMOUNT);
+                amount = intent.getStringExtra(RequestService.CHARGE_AMOUNT);
                 if (amount == null) {
                     Log.wtf("Adrian", "this is not supposed to be there");
                 }
