@@ -5,23 +5,37 @@
     tools:context=".fragments.FragmentHome">
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="600px"
         android:layout_height="wrap_content"
-        android:text="Client"
+        android:text="Join an event"
         android:id="@+id/clientButton"
         android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:allowUndo="true"
+        android:textColor="#ffffff"
+        android:background="#c9556b"
+        android:layout_marginBottom="20px"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_marginLeft="30px"
+        android:layout_marginRight="30px" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Host"
+        android:text="Create an event"
         android:id="@+id/hostButton"
-        android:layout_alignParentStart="true"
+        android:background="#55c9ba"
+        android:textColor="#ffffff"
+        android:layout_alignWithParentIfMissing="false"
         android:layout_above="@+id/clientButton"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentEnd="true"
+        android:nestedScrollingEnabled="false"
+        android:layout_marginBottom="20px"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="30px"
+        android:layout_marginRight="30px" />
 
     <ListView
         android:layout_width="wrap_content"

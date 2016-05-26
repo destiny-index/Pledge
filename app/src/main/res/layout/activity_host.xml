@@ -15,10 +15,14 @@
         android:text="pay"
         android:id="@+id/button"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="58dp"
+        android:layout_marginBottom="50px"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
-        android:onClick="payEveryone"/>
+        android:onClick="payEveryone"
+        android:layout_marginLeft="20px"
+        android:layout_marginRight="20px"
+        android:textColor="#ffffff"
+        android:background="#55c9ba" />
 
     <ListView
         android:layout_width="wrap_content"
@@ -27,4 +31,5 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_above="@+id/button" />
+
 </RelativeLayout>
