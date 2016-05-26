@@ -138,24 +138,25 @@ public class FragmentHome extends Fragment{
 
                 //dialog popup to get maximum amount pledged
                 builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("Set pledge amount to " + itemValue);
+                builder.setTitle("Do you want to pledge?");
 
                 // Set up the input
-                final EditText input = new EditText(getActivity());
+                //final EditText input = new EditText(getActivity());
                 // Specify the type of input expected
-                input.setInputType(InputType.TYPE_CLASS_NUMBER);
-                builder.setView(input);
+                //input.setInputType(InputType.TYPE_CLASS_NUMBER);
+                //builder.setView(input);
 
                 // Set up the buttons
                 builder.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        pledgeAmount = Integer.parseInt(input.getText().toString());
-
                         Log.v("Adrian", "got yes dialog");
                         Intent intent = new Intent(getActivity(), ClientActivity.class);
                         intent.putExtra(ClientActivity.EXTRA_MAC, MAC);
-                        intent.putExtra(ClientActivity.EXTRA_AMOUNT, pledgeAmount);
+
+                        // We get the pledge amount from the settings
+                        // intent.putExtra(ClientActivity.EXTRA_AMOUNT, pledgeAmount);
+
                         startActivity(intent);
 
                     }
