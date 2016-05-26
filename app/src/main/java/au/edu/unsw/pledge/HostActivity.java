@@ -25,7 +25,7 @@ public class HostActivity extends AppCompatActivity {
     private static final String TAG = "BluetoothActivity";
     private static final int REQUEST_ENABLE_DISCOVERABLE = 1;
 
-    private final ArrayAdapter<String> preapprovalKeys= new ArrayAdapter(this, android.R.layout.simple_list_item_1);
+    private ArrayAdapter<String> preapprovalKeys = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +34,7 @@ public class HostActivity extends AppCompatActivity {
 
         Log.v(TAG, "Starting Host");
 
+        preapprovalKeys = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
         ListView lv = (ListView) findViewById(R.id.listView);
         lv.setAdapter(preapprovalKeys);
 
@@ -154,7 +155,11 @@ public class HostActivity extends AppCompatActivity {
     }
 
     private synchronized void addToList(final String key) {
-        preapprovalKeys.add(key);
+        runOnUiThread(new Runnable () {
+            @Override
+            public void run() {
+                preapprovalKeys.add(key);
+            }
+        });
     }
-
 }
