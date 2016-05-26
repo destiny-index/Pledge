@@ -16,6 +16,8 @@ import android.widget.Toast;
 import com.paypal.android.MEP.PayPal;
 import com.paypal.android.MEP.PayPalPreapproval;
 
+import java.math.BigDecimal;
+
 import au.edu.unsw.pledge.R;
 
 public class InterfaceActivity extends AppCompatActivity {
@@ -118,11 +120,11 @@ public class InterfaceActivity extends AppCompatActivity {
 //        });
 //    }
 
-    public void getPaymentFromKey(String preapprovalKey, int chargeAmount) {
+    public void getPaymentFromKey(String preapprovalKey, BigDecimal chargeAmount) {
         Intent intent = new Intent(getApplicationContext(), RequestService.class);
         intent.putExtra(RequestService.ACTION, RequestService.GET_PREAPPROVED_PAYMENT);
         intent.putExtra(RequestService.PREAPPROVAL_KEY, preapprovalKey);
-        intent.putExtra(RequestService.CHARGE_AMOUNT, chargeAmount);
+        intent.putExtra(RequestService.CHARGE_AMOUNT, chargeAmount.toString());
         startService(intent);
     }
 

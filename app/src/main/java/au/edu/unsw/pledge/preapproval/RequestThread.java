@@ -15,6 +15,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.math.BigDecimal;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -43,7 +44,7 @@ class RequestThread implements Runnable {
     private int action;
     private String confirmedPreapprovalKey;
 
-    private int amount;
+    private String amount;
 
     RequestThread(RequestListener listener, Intent intent) throws InvalidPropertiesFormatException {
 //        Log.i(TAG, "RequestThread constructor");
@@ -56,8 +57,8 @@ class RequestThread implements Runnable {
         if (action == RequestService.GET_PREAPPROVED_PAYMENT) {
             if (intent.getStringExtra(RequestService.PREAPPROVAL_KEY) != null) {
                 confirmedPreapprovalKey = intent.getStringExtra(RequestService.PREAPPROVAL_KEY);
-                amount = intent.getIntExtra(ClientActivity.EXTRA_AMOUNT, -1);
-                if (amount == -1) {
+                amount = intent.getStringExtra(ClientActivity.EXTRA_AMOUNT);
+                if (amount == null) {
                     Log.wtf("Adrian", "this is not supposed to be there");
                 }
             } else
@@ -198,7 +199,7 @@ class RequestThread implements Runnable {
             JSONObject receiverList = new JSONObject();
             JSONArray receiver = new JSONArray();
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("amount", Integer.toString(amount));
+            jsonObject.put("amount", amount);
             jsonObject.put("email", prefs.getString("pref_paymentAccount", null));
             receiver.put(jsonObject);
             receiverList.put("receiver", receiver);
