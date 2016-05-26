@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,12 +16,16 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class HostActivity extends AppCompatActivity {
 
     private static final String TAG = "BluetoothActivity";
     private static final int REQUEST_ENABLE_DISCOVERABLE = 1;
+
+    private final ArrayAdapter<String> preapprovalKeys= new ArrayAdapter(this, android.R.layout.simple_list_item_1);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +34,8 @@ public class HostActivity extends AppCompatActivity {
 
         Log.v(TAG, "Starting Host");
 
+        ListView lv = (ListView) findViewById(R.id.listView);
+        lv.setAdapter(preapprovalKeys);
 
         Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
 
@@ -119,10 +127,14 @@ public class HostActivity extends AppCompatActivity {
                     PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
                     BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 ) {
-                    String inputLine, outputLine;
+                    String inputLine;
 
                     inputLine = in.readLine();
                     Log.v(TAG, "Got from client: "+inputLine);
+                    out.println("GOT PREAPPROVAL");
+
+                    addToList(inputLine);
+
                     showToast(inputLine);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -139,6 +151,10 @@ public class HostActivity extends AppCompatActivity {
                 Toast.makeText(HostActivity.this, toast, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private synchronized void addToList(final String key) {
+        preapprovalKeys.add(key);
     }
 
 }
