@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +26,7 @@ import au.edu.unsw.pledge.fragments.FragmentHome;
 import au.edu.unsw.pledge.fragments.FragmentPayment;
 import au.edu.unsw.pledge.fragments.FragmentSettings;
 import au.edu.unsw.pledge.loginsystem.LoginActivity;
+import au.edu.unsw.pledge.preapproval.RequestService;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -84,6 +86,14 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFrag(new FragmentPayment(), "Payment");
         adapter.addFrag(new FragmentSettings(), "Settings");
         viewPager.setAdapter(adapter);
+    }
+
+    public void getPaymentFromKey(String preapprovalKey, BigDecimal chargeAmount) {
+        Intent intent = new Intent(getApplicationContext(), RequestService.class);
+        intent.putExtra(RequestService.ACTION, RequestService.GET_PREAPPROVED_PAYMENT);
+        intent.putExtra(RequestService.PREAPPROVAL_KEY, preapprovalKey);
+        intent.putExtra(RequestService.CHARGE_AMOUNT, chargeAmount.toString());
+        startService(intent);
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
