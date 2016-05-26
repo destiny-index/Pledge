@@ -107,6 +107,7 @@ class RequestThread implements Runnable {
             // Read response from paypal endpoint
             BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             response = in.readLine();
+            Log.v(TAG, "response: "+response);
             in.close();
 
             // Extract preapproval key from json response

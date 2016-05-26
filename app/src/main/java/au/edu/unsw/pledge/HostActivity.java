@@ -190,8 +190,9 @@ public class HostActivity extends AppCompatActivity {
 
                 Log.i(TAG, "paying Everyone");
                 for (int i = 0, max = preapprovalKeys.getCount(); i < max; ++i) {
-                    Log.v(TAG, "charging"+preapprovalKeys.getItem(i) +" "+ amount.divide(new BigDecimal(max), BigDecimal.ROUND_DOWN));
-                    getPaymentFromKey(preapprovalKeys.getItem(i), amount.divide(new BigDecimal(max), BigDecimal.ROUND_DOWN));
+                    // + 1 because of host itself
+                    Log.v(TAG, "charging"+preapprovalKeys.getItem(i) +" "+ amount.divide(new BigDecimal(max + 1), BigDecimal.ROUND_DOWN));
+                    getPaymentFromKey(preapprovalKeys.getItem(i), amount.divide(new BigDecimal(max + 1), BigDecimal.ROUND_DOWN));
                 }
             }
         });
