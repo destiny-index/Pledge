@@ -137,14 +137,18 @@ public class HostActivity extends AppCompatActivity {
                     BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 ) {
                     String inputLine;
+                    String inputLine2;
 
                     inputLine = in.readLine();
                     Log.v(TAG, "Got from client: "+inputLine);
                     out.println("GOT PREAPPROVAL");
-
-                    addToList(inputLine);
-
                     showToast(inputLine);
+
+                    inputLine2 = in.readLine();
+                    Log.v(TAG, "Got from client: "+inputLine2);
+                    out.println("GOT PLEDGE ID");
+                    showToast(inputLine2);
+                    addToList(inputLine + "; " + inputLine2);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -191,8 +195,8 @@ public class HostActivity extends AppCompatActivity {
                 Log.i(TAG, "paying Everyone");
                 for (int i = 0, max = preapprovalKeys.getCount(); i < max; ++i) {
                     // + 1 because of host itself
-                    Log.v(TAG, "charging"+preapprovalKeys.getItem(i) +" "+ amount.divide(new BigDecimal(max + 1), BigDecimal.ROUND_DOWN));
-                    getPaymentFromKey(preapprovalKeys.getItem(i), amount.divide(new BigDecimal(max + 1), BigDecimal.ROUND_DOWN));
+                    Log.v(TAG, "charging"+preapprovalKeys.getItem(i).split(";")[0] +" "+ amount.divide(new BigDecimal(max + 1), BigDecimal.ROUND_DOWN));
+                    getPaymentFromKey(preapprovalKeys.getItem(i).split(";")[0], amount.divide(new BigDecimal(max + 1), BigDecimal.ROUND_DOWN));
                 }
             }
         });

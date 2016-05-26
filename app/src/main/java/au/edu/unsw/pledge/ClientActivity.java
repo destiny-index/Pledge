@@ -4,7 +4,9 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -110,13 +112,25 @@ public class ClientActivity extends InterfaceActivity {
                     PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
                     BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             ) {
-                showToast("I'm sending stuff");
+                showToast("I'm sending preapproval key");
 
                 out.println(payLoad);
                 while (!in.readLine().equals("GOT PREAPPROVAL")) {
 
                     Log.v(TAG, "Sending Preapproval again");
                     out.println(payLoad);
+                }
+
+                showToast("I'm sending pledge ID");
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                showToast(prefs.getString("pledgeEmail", "not logged in"));
+
+                out.println(prefs.getString("pledgeEmail", "not logged in"));
+
+                while (!in.readLine().equals("GOT PLEDGE ID")) {
+
+                    Log.v(TAG, "Sending pledge ID again");
+                    out.println(prefs.getString("pledgeEmail", "not logged in"));
                 }
 
             } catch (IOException e) {
