@@ -52,13 +52,15 @@ public class MainActivity extends AppCompatActivity {
         prefs = PreferenceManager.getDefaultSharedPreferences(this); // ensure defaults are set
 
         // store the pledgeEmail when user logs in
-        if (getIntent() != null && getIntent().hasExtra("pledgeEmail")) {
+        if (getIntent() != null && getIntent().hasExtra("email")) {
             prefs.edit().putString("pledgeEmail", getIntent().getStringExtra("email")).commit();
+            System.out.println("Added pledgeEmail");
         }
 
         // if we do not have a paymentAccount, then use the pledge email as the default paymentAccount
         if (prefs.getString("pref_paymentAccount", "").equals("") && getIntent() != null && getIntent().hasExtra("email")) {
             prefs.edit().putString("pref_paymentAccount", getIntent().getStringExtra("email")).commit();
+            System.out.println("Added default paymentAccount");
         }
 
         // Set up the ViewPager with the sections adapter.
