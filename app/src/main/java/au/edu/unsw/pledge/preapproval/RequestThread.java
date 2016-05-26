@@ -25,6 +25,8 @@ import java.util.InvalidPropertiesFormatException;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import au.edu.unsw.pledge.ClientActivity;
+
 class RequestThread implements Runnable {
 
     private final static String TAG = "Adrian";
@@ -54,7 +56,7 @@ class RequestThread implements Runnable {
         if (action == RequestService.GET_PREAPPROVED_PAYMENT) {
             if (intent.getStringExtra(RequestService.PREAPPROVAL_KEY) != null) {
                 confirmedPreapprovalKey = intent.getStringExtra(RequestService.PREAPPROVAL_KEY);
-                amount = intent.getIntExtra(RequestService.CHARGE_AMOUNT, -1);
+                amount = intent.getIntExtra(ClientActivity.EXTRA_AMOUNT, -1);
                 if (amount == -1) {
                     Log.wtf("Adrian", "this is not supposed to be there");
                 }
@@ -82,10 +84,10 @@ class RequestThread implements Runnable {
         String response = null;
 
         try {
-            Log.i(TAG, "in getPreApprovalKey");
+            Log.i(TAG, "in getPreApprovalKey after");
             URL url = new URL("https://svcs.sandbox.paypal.com/AdaptivePayments/Preapproval");
             HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
-
+            Log.i(TAG, "getPreApprovalKey: got connection");
             conn.setRequestMethod("POST");
 
             String request = generatePreapprovalData();

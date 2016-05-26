@@ -41,6 +41,7 @@ public class ClientActivity extends InterfaceActivity {
 
         Intent intent = new Intent(this, RequestService.class);
         intent.putExtra(RequestService.ACTION, RequestService.GET_PREAPPROVAL);
+        //The intent also has EXTRA_AMOUNT
         startService(intent);
         /**
          * will call onActivityResult with requestCode PREAPPROVAL_REQUEST
@@ -113,6 +114,8 @@ public class ClientActivity extends InterfaceActivity {
 
                 out.println(payLoad);
                 while (!in.readLine().equals("GOT PREAPPROVAL")) {
+
+                    Log.v(TAG, "Sending Preapproval again");
                     out.println(payLoad);
                 }
 
